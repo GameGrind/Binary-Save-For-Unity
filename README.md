@@ -7,13 +7,13 @@ All it uses is a BinaryFormatter to serialize and deserialize objects. Any objec
 
 To save data, this is what you do:
 
-````
+````csharp
 SaveData.Save(Items, "Inventory");
 ````
 
 This takes the object you're saving as the first parameter, and the key you're saving it with for the second. For instance, this `Items` object looks like this:
 
-````
+````csharp
 Items = new Dictionary<int, string>
 {
     { 12, "Broken Sword" },
@@ -22,7 +22,7 @@ Items = new Dictionary<int, string>
 ````
 
 And then when you're loading your game, to load the Inventory data back in, just do this:
-````
+````csharp
 Items = SaveData.Load<Dictionary<int, string>>("Inventory");
 ````
 
@@ -31,7 +31,7 @@ Notice that the methods take a generic type so in this case I know I want an int
 ## Saving/Loading non-serializable objects
 This is something that we have to do a lot of in Unity since MonoBehaviours are quite special. For instance, let's say we want to save this Player object:
 
-````
+````csharp
 public class Player : MonoBehaviour {
     public int Health { get; set; }
     public int Level { get; set; }
@@ -47,7 +47,7 @@ I need to save the `Health`, `Level`, and `Coolness` properties. Unlike a serial
 
 We have a couple options, but what I'm going to do is within the same file, create a class called `SerializablePlayer` with those properties, and mark it with `[System.Serializable]`. I can now create an object from this, pass my values in, and save as I please. 
 
-````
+````csharp
 [System.Serializable]
 public class SerializablePlayer
 {
@@ -58,7 +58,7 @@ public class SerializablePlayer
 ````
 And then to save player:
 
-````
+````csharp
 SerializablePlayer serializedPlayer = new SerializablePlayer()
 {
     Health = this.Health,
@@ -69,7 +69,7 @@ SaveData.Save<SerializablePlayer>(serializedPlayer, "PlayerStats");
 ````
 Load player:
 
-````
+````csharp
 SerializablePlayer playerData = SaveData.Load<SerializablePlayer>("PlayerStats");
 ````
 
