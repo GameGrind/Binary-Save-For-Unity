@@ -20,6 +20,7 @@ Items = new Dictionary<int, string>
     { 20, "Health Scroll" }
 };
 ````
+For a move complex inventory structure example, check the examples directory. I'll be adding more over time.
 
 And then when you're loading your game, to load the Inventory data back in, just do this:
 ````csharp
